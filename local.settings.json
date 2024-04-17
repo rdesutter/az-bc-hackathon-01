@@ -1,0 +1,11 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "BLOB_SAS_URL": "",
+    "SQL_DB_SERVER": "xxx.database.windows.net",
+    "SQL_DB_USER": "hackathonadmin",
+    "SQL_DB_PASSWORD": "xxx",
+    "SQL_DB_NAME": "HackathonDB"
+  }
+}
+
