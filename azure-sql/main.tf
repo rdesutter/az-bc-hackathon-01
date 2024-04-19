@@ -34,7 +34,8 @@ resource "azurerm_mssql_server" "server" {
   version                      = "12.0"
 }
 
-resource "azurerm_mssql_database" "db" {
-  name      = var.sql_db_name
-  server_id = azurerm_mssql_server.server.id
-}
+// db will be created by the runbook
+//resource "azurerm_mssql_database" "db" {
+//  name      = var.sql_db_name
+//  server_id = azurerm_mssql_server.server.id
+//}

@@ -13,10 +13,16 @@ The following requirements are needed:
     - [Download](https://developer.hashicorp.com/terraform/downloads?product_intent=terraform)
     - Please refer to the [install cli](https://developer.hashicorp.com/terraform/tutorials/azure-get-started/install-cli) for detailed install instruction.
 
+[[RDS: is this [Install Terraform on Windows with Azure Powershell](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-windows-powershell?tabs=bash) not easier? This article also includes how to Authenticate via a Microsoft account and set the target subscription (i.e., the one Damian created).
+
+Alternative: set the subscription_id in the terraform providers.tf already.
+]]
+
+
 - Visual Studio Code Extension "Terraform"
     - https://marketplace.visualstudio.com/items?itemName=HashiCorp.terraform
 
-- Terraform specific
+- Terraform specific [[RDS: these will be automatically downloaded when running terraform init -upgrade. No real need to list them here?]]
     - <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.6.0)
     - <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) (>= 1.10.0)
     - <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (>= 3.79.0)
@@ -34,6 +40,16 @@ The following requirements are needed:
      - Authentication: SQL and Microsoft Entra authentication enabled
      - Networking: Allow Azure services and resources to access this server enabled
    - Azure Blob Storage account
+
+[[RDS: 
+I've removed the DB creation, but kept the SQL Server as the DB is dropped and created in the python script.
+
+This solves also the strange error when attempting to apply the Azure SQL Db in the terraform:
+SQL Server was created, but during the DB, I got this.
+`` Error: reading SQL Server Blob Connection Policy Server (Subscription: "9d894bc7-836c-4caf-bea5-f570170528d1"
+│ Resource Group Name: "hack-rg-golden-buffalo"
+│ Server Name: "sql-awake-hedgehog"): unexpected status 404 (404 Not Found) with error: ParentResourceNotFound: Failed to perform 'read' on resource(s) of type 'servers/connectionPolicies', because the parent resource '/subscriptions/9d894bc7-836c-4caf-bea5-f570170528d1/resourceGroups/hack-rg-golden-buffalo/providers/Microsoft.Sql/servers/sql-awake-hedgehog' could not be found.``
+]]
 
 3. Generate a **SAS URL** for the blob storage container. Set the expiry date according to the planned lifecycle of your application.
 
@@ -68,8 +84,8 @@ Description: Must be specified, e.g. ```East US```.
 Defines the Azure region in which region bound resources are to be deployed.
 
 
-### Initialize Terraform
-Run <b>terraform init</b> to initialize a working directory that contains a Terraform configuration. This command downloads the Azure provider required to manage the Azure resources. The <b>-upgrade</b> parameter upgrades the necassary provider plugins to the newest version that complies with the configurations version constraints.
+## Initialize Terraform
+Run <b>terraform init</b> to initialize a working directory that contains a Terraform configuration. This command downloads the Azure provider required to manage the Azure resources. The <b>-upgrade</b> parameter upgrades the necessary provider plugins to the newest version that complies with the configurations version constraints.
 ```
 terraform init -upgrade
 ```
@@ -80,8 +96,15 @@ Run <b>terraform plan</b> to create an execution plan.
 terraform plan
 ```
 
+
 ### Apply a Terraform execution plan
 Run <b>terraform apply</b> to apply the execution plan.
 ```
 terraform apply
+```
+
+### Get the output values
+Run <b>terraform output</b> after applying the execution plan.
+```
+terraform output -json
 ```
